@@ -1,4 +1,10 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
-echo "Weather.php";
+include_once __DIR__ . '/incs/header.tpl.php';
+?>
+
+
+
+<?php
+include_once __DIR__ . '/incs/footer.tpl.php';
