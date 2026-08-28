@@ -49,27 +49,29 @@ class Utils
         return false;
     }
 
-    public static function GetCurrentHour() : int
-    {
-        $now = new DateTime();
-        return (int)$now->format('H');
-    }
-
     public static function GetHour(string $date) : int
     {
         $now = new DateTime($date);
         return $now->format('H');
     }
 
-    public static function GetCurrentDate() : string
+    public static function GetWeekdayName(string $str) : string
     {
-        $now = new DateTime();
-        return $now->format('Y-m-d');
-    }
+        $timestamp = strtotime($str);
+        if ($timestamp === false) {
+            throw new InvalidArgumentException('Неверный формат даты');
+        }
 
-    public static function GetDate(string $date) : string
-    {
-        $now = new DateTime($date);
-        return $now->format('Y-m-d');
+        $daysRu = [
+            0 => 'Вс',
+            1 => 'Пн',
+            2 => 'Вт',
+            3 => 'Ср',
+            4 => 'Чт',
+            5 => 'Пт',
+            6 => 'Сб',
+        ];
+
+        return $daysRu[(int)date('w', $timestamp)] ?? '?';
     }
 }

@@ -136,7 +136,6 @@ include_once __DIR__ . '/incs/header.tpl.php';
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
-                    <!-- Заполняется динамически -->
                 </div>
 
                 <!-- Прогноз на 3 дня -->
@@ -144,7 +143,25 @@ include_once __DIR__ . '/incs/header.tpl.php';
                     <i class="bi bi-calendar3"></i> Прогноз на 3 дня
                 </div>
                 <div class="day-list" id="dayContainer">
-                    <!-- Заполняется динамически -->
+                    <?php if (count($forecastDay) == 0): ?>
+                        <div class="text-center text-white-50" style="padding: 20px;">
+                            Нет данных о прогнозе
+                        </div>
+                    <?php else: ?>
+                        <?php foreach ($forecastDay as $day): ?>
+                            <div class="day-card">
+                                <div class="day-name"><?= Utils::GetWeekdayName($day['date']) ?></div>
+                                <div class="day-icon">
+                                    <span><span class="desc-text"><?= Utils::GetImageTag($day['day']['condition']['icon'], '') ?></span></span>
+                                    <span class="desc-text"><?= $day['day']['condition']['text'] ?></span>
+                                </div>
+                                <div class="day-temps">
+                                    <span class="max-temp"><?= Utils::GetNumber($day['day']['maxtemp_c'], 0) ?>°</span>
+                                    <span class="min-temp"><?= Utils::GetNumber($day['day']['mintemp_c'], 0) ?>°</span>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Кнопка назад -->
