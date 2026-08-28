@@ -2,6 +2,8 @@
 
 namespace WeatherMonitor;
 
+use Dotenv\Dotenv;
+
 class Utils
 {
     public function GetTimeFromDate(string $str, string $default) : string
@@ -39,5 +41,15 @@ class Utils
         if (!isset($str) || !is_numeric($str)) return $default;
         $wind_kph = (float)$str;
         return bcround($wind_kph*1000/60/60, 1);
+    }
+
+    public function GetValueFromEnv(string $key) : string|bool
+    {
+        if (file_exists(__DIR__ . '/../.env')) {
+            $dotenv = Dotenv::createMutable(__DIR__ . '/../');
+            $env = $dotenv->load();
+            return $env[$key] ?? false;
+        }
+        return false;
     }
 }

@@ -1,16 +1,21 @@
 <?php
 
+require_once __DIR__ . '/vendor/autoload.php';
+
 use WeatherMonitor\Downloader;
 use WeatherMonitor\Utils;
-
-require_once __DIR__ . '/vendor/autoload.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $utils = new Utils();
 
     $lat = isset($_GET["lat"]) && is_numeric($_GET["lat"]) ? +$_GET["lat"] : 0;
     $lon = isset($_GET["lon"]) && is_numeric($_GET["lon"]) ? +$_GET["lon"] : 0;
-    $api_key = 'api_key';
+    $api_key = $utils->GetValueFromEnv('WEATHER_API_KEY');
+    if ($api_key === false){
+        echo 'Не задан api-ключ.';
+        die();
+    }
+
     $url = 'https://api.weatherapi.com/v1/forecast.json?key=' . $api_key . '&q=' . $lat . ',' . $lon . '&days=3';
     $downloader = new Downloader();
     $hasError = false;

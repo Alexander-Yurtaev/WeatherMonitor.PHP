@@ -18,6 +18,7 @@
   "require": {
     "vlucas/valitron": "^1.4",
     "ext-curl": "*",
-    "ext-bcmath": "*"
+    "ext-bcmath": "*",
+    "vlucas/phpdotenv": "^5.7"
   }
 }
