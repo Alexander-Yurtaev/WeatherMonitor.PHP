@@ -10,7 +10,14 @@
       "email": "ayurtaev@mail.ru"
     }
   ],
+  "autoload": {
+    "psr-4": {
+      "WeatherMonitor\\": "src/"
+    }
+  },
   "require": {
-    "vlucas/valitron": "^1.4"
+    "vlucas/valitron": "^1.4",
+    "ext-curl": "*",
+    "ext-bcmath": "*"
   }
 }
