@@ -2,32 +2,28 @@
 
 namespace WeatherMonitor;
 
+use DateTime;
 use Dotenv\Dotenv;
 
 class Utils
 {
-    public function GetTimeFromDate(string $str, string $default) : string
+    public static function GetTimeFromDate(string $str, string $default) : string
     {
-        if (isset($str))
+        if (date_parse($str))
         {
-            $updateDate = date_parse($str);
-            if ($updateDate)
-            {
-                return $updateDate['hour'] . ':' . $updateDate['minute'];
-            }
-            return $default . '_1';
+            return new \DateTime($str)->format('H:i');
         }
-        return $default . '_2';
+        return $default;
     }
 
-    public function GetNumber(string $str, string $default) : string
+    public static function GetNumber(string $str, string $default) : string
     {
         if (!isset($str) || !is_numeric($str)) return $default;
         $value = (float)$str;
         return bcround($value, 0);
     }
 
-    public function GetImageTag(string $url, string $emoji) : string
+    public static function GetImageTag(string $url, string $emoji) : string
     {
         if (isset($url))
         {
@@ -36,14 +32,14 @@ class Utils
         return $emoji;
     }
 
-    public function ConvertKmH2Ms(mixed $str, string $default) : string
+    public static function ConvertKmH2Ms(mixed $str, string $default) : string
     {
         if (!isset($str) || !is_numeric($str)) return $default;
         $wind_kph = (float)$str;
         return bcround($wind_kph*1000/60/60, 1);
     }
 
-    public function GetValueFromEnv(string $key) : string|bool
+    public static function GetValueFromEnv(string $key) : string|bool
     {
         if (file_exists(__DIR__ . '/../.env')) {
             $dotenv = Dotenv::createMutable(__DIR__ . '/../');
@@ -51,5 +47,29 @@ class Utils
             return $env[$key] ?? false;
         }
         return false;
+    }
+
+    public static function GetCurrentHour() : int
+    {
+        $now = new DateTime();
+        return (int)$now->format('H');
+    }
+
+    public static function GetHour(string $date) : int
+    {
+        $now = new DateTime($date);
+        return $now->format('H');
+    }
+
+    public static function GetCurrentDate() : string
+    {
+        $now = new DateTime();
+        return $now->format('Y-m-d');
+    }
+
+    public static function GetDate(string $date) : string
+    {
+        $now = new DateTime($date);
+        return $now->format('Y-m-d');
     }
 }
