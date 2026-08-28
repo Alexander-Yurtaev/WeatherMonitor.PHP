@@ -413,7 +413,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 14px;
+            padding: 0px 14px;
             background: rgba(255,255,255,0.02);
             border-radius: 60px;
             border: 1px solid rgba(255,255,255,0.03);
@@ -475,7 +475,7 @@
             .temp-big { font-size: 48px; }
             .current-temp-row { flex-wrap: wrap; }
             .extra-row { gap: 12px; }
-            .day-card { padding: 10px 12px; }
+            .day-card { padding: 0px 12px; }
             .day-name { min-width: 60px; font-size: 14px; }
         }
 
