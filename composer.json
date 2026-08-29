@@ -1,6 +1,5 @@
 {
   "name": "ayurtaev/weather_monitor",
-  "version": "1.0.0",
   "description": "Приложение для мониторинга погоды с использованием WeatherAPI.com.",
   "minimum-stability": "stable",
   "license": "MIT",
