@@ -88,26 +88,26 @@ php -S localhost:8000
 
 ```
 WeatherMonitor.PHP/
+├── config/
+│   └── cacert.pem             # SSL-сертификат для cURL
+├── documents/
+│   └── screenshorts/          # Скриншоты приложения
 ├── src/
+│   ├── exceptions/
+│   │   └── InvalidArgumentException.php  # Класс исключения
 │   ├── helpers/
 │   │   ├── Downloader.php    # Класс для загрузки данных через cURL
 │   │   └── Utils.php         # Вспомогательные функции
-│   └── exceptions/
-│       └── InvalidArgumentException.php  # Класс исключения
-├── public/
 │   ├── incs/
 │   │   ├── header.tpl.php    # Шапка страницы
 │   │   └── footer.tpl.php    # Подвал страницы
 │   ├── index.php              # Главная страница (форма ввода координат)
 │   └── weather.php            # Страница с прогнозом погоды
-├── config/
-│   └── cacert.pem             # SSL-сертификат для cURL
 ├── vendor/                    # Зависимости Composer
-├── documents/
-│   └── screenshorts/          # Скриншоты приложения
 ├── .env.example                # Пример файла с переменными окружения
 ├── composer.json              # Конфигурация Composer
 ├── composer.lock              # Блокировка зависимостей Composer
+├── composer.phar              # Composer
 └── README.md                  # Этот файл
 ```
 
