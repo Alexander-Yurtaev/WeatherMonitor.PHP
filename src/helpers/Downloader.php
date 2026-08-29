@@ -1,5 +1,5 @@
 <?php
-namespace WeatherMonitor;
+namespace WeatherMonitor\helpers;
 
 class Downloader
 {
@@ -27,7 +27,7 @@ class Downloader
         curl_setopt($ch, CURLOPT_FORBID_REUSE, TRUE);
 
         // Прописываем сертификат
-        $certPath = __DIR__ . '/../config/cacert.pem'; // Путь относительно Downloader.php
+        $certPath = __DIR__ . '/../../config/cacert.pem'; // Путь относительно Downloader.php
         if (file_exists($certPath)) {
             curl_setopt($ch, CURLOPT_CAINFO, $certPath);
         }

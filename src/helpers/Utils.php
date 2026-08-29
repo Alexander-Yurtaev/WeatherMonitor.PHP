@@ -1,9 +1,10 @@
 <?php
 
-namespace WeatherMonitor;
+namespace WeatherMonitor\helpers;
 
 use DateTime;
 use Dotenv\Dotenv;
+use WeatherMonitor\exceptions\InvalidArgumentException;
 
 class Utils
 {
@@ -41,8 +42,8 @@ class Utils
 
     public static function GetValueFromEnv(string $key) : string|bool
     {
-        if (file_exists(__DIR__ . '/../.env')) {
-            $dotenv = Dotenv::createMutable(__DIR__ . '/../');
+        if (file_exists(__DIR__ . '/../../.env')) {
+            $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
             $env = $dotenv->load();
             return $env[$key] ?? false;
         }

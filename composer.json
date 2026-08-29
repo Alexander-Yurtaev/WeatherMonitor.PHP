@@ -20,5 +20,11 @@
     "ext-curl": "*",
     "ext-bcmath": "*",
     "vlucas/phpdotenv": "^5.7"
+  },
+  "config": {
+    "vendor-dir": "vendor",
+    "platform": {
+      "php": "8.5.0"
+    }
   }
 }

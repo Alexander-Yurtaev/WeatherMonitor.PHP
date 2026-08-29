@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-use WeatherMonitor\Downloader;
-use WeatherMonitor\Utils;
+use WeatherMonitor\helpers\Downloader;
+use WeatherMonitor\helpers\Utils;
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $lat = isset($_GET["lat"]) && is_numeric($_GET["lat"]) ? +$_GET["lat"] : 0;
