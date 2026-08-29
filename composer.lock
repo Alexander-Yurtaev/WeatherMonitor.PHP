@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "58f8ceb81674fe23b341ab57d95c7076",
+    "content-hash": "cf936b9aee5ef6eda22ea69687c42697",
     "packages": [
         {
             "name": "graham-campbell/result-type",
