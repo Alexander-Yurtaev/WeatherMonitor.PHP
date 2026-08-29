@@ -34,14 +34,14 @@ Weather Monitor — это простое веб-приложение, кото�
 ### 1. Клонирование репозитория
 
 ```bash
-git clone https://github.com/yourusername/weather_monitor.git
-cd weather_monitor
+git clone https://github.com/Alexander-Yurtaev/WeatherMonitor.PHP.git
+cd WeatherMonitor.PHP
 ```
 
 ### 2. Установка зависимостей
 
 ```bash
-composer install
+php composer.phar install
 ```
 
 ### 3. Настройка переменных окружения
@@ -145,7 +145,7 @@ $data = $downloader->load($url);
 
 ## 📝 Лицензия
 
-MIT License. Подробности в файле [LICENSE](LICENSE).
+MIT
 
 ## 👨‍💻 Автор
 
