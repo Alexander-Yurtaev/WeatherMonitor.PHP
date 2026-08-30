@@ -36,3 +36,9 @@ Thumbs.db
 
 ### Logs ###
 *.log
+
+### containers/*/data
+containers/memcached/data
+containers/nginx/data
+containers/postgres/data
+containers/redis/data

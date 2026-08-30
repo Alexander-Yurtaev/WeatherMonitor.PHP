@@ -1,5 +1,5 @@
 <?php
-namespace WeatherMonitor\helpers;
+namespace WeatherMonitor\src\helpers;
 
 class Downloader
 {

@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Погода</title>
 
     <!-- Bootstrap 5 & Icons -->
@@ -42,7 +42,7 @@
             padding: 24px 20px 32px;
             box-shadow: 0 25px 50px -8px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03);
             transition: all 0.2s;
-            max-height: 95vh;
+            /* max-height: 95vh; */
             display: flex;
             flex-direction: column;
         }

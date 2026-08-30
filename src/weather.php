@@ -2,8 +2,8 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use WeatherMonitor\helpers\Downloader;
-use WeatherMonitor\helpers\Utils;
+use WeatherMonitor\src\helpers\Downloader;
+use WeatherMonitor\src\helpers\Utils;
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $lat = isset($_GET["lat"]) && is_numeric($_GET["lat"]) ? +$_GET["lat"] : 0;
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $currentTemperature = Utils::GetNumber($data['current']['temp_c'], '--');
         $conditionText = $data['current']['condition']['text'] ?? '--';
         $feelsLike = Utils::GetNumber($data['current']['feelslike_c'], '--');
-        $currentIcon = Utils::GetImageTag($data['current']['condition']['icon'], '☀️');
+        $currentIcon = Utils::GetImageTag($data['current']['condition']['icon'], '☀️', $data['current']['condition']['text']);
         $humidity = Utils::GetNumber($data['current']['humidity'], '--');
         $humidity = Utils::GetNumber($data['current']['humidity'], '--');
 
@@ -121,7 +121,7 @@ include_once __DIR__ . '/incs/header.tpl.php';
                             <?php if (Utils::GetHour($data['current']['last_updated']) <= Utils::GetHour($hour['time'])): ?>
                                 <div class="hour-item">
                                     <div class="hour-label"><?= Utils::GetTimeFromDate($hour['time'], '--') ?></div>
-                                    <div class="hour-icon"><?= Utils::GetImageTag($hour['condition']['icon'], '') ?></div>
+                                    <div class="hour-icon"><?= Utils::GetImageTag($hour['condition']['icon'], '', $hour['condition']['text']) ?></div>
                                     <div class="hour-temp"><?= Utils::GetNumber($hour['temp_c'], '--') ?>°</div>
                                     <div class="hour-day-label">Сегодня</div>
                                 </div>
@@ -130,7 +130,7 @@ include_once __DIR__ . '/incs/header.tpl.php';
                         <?php foreach ($forecastDay[1]['hour'] as $hour): ?>
                             <div class="hour-item">
                                 <div class="hour-label"><?= Utils::GetTimeFromDate($hour['time'], '--') ?></div>
-                                <div class="hour-icon"><?= Utils::GetImageTag($hour['condition']['icon'], '') ?></div>
+                                <div class="hour-icon"><?= Utils::GetImageTag($hour['condition']['icon'], '', $hour['condition']['text']) ?></div>
                                 <div class="hour-temp"><?= Utils::GetNumber($hour['temp_c'], '--') ?>°</div>
                                 <div class="hour-day-label">Завтра</div>
                             </div>
@@ -152,7 +152,7 @@ include_once __DIR__ . '/incs/header.tpl.php';
                             <div class="day-card">
                                 <div class="day-name"><?= Utils::GetWeekdayName($day['date']) ?></div>
                                 <div class="day-icon">
-                                    <span><span class="desc-text"><?= Utils::GetImageTag($day['day']['condition']['icon'], '') ?></span></span>
+                                    <span><span class="desc-text"><?= Utils::GetImageTag($day['day']['condition']['icon'], '', $day['day']['condition']['text']) ?></span></span>
                                     <span class="desc-text"><?= $day['day']['condition']['text'] ?></span>
                                 </div>
                                 <div class="day-temps">

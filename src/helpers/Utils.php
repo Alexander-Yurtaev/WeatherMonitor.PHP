@@ -1,6 +1,6 @@
 <?php
 
-namespace WeatherMonitor\helpers;
+namespace WeatherMonitor\src\helpers;
 
 use DateTime;
 use Dotenv\Dotenv;
@@ -21,14 +21,14 @@ class Utils
     {
         if (!isset($str) || !is_numeric($str)) return $default;
         $value = (float)$str;
-        return bcround($value, 0);
+        return round($value, 0);
     }
 
-    public static function GetImageTag(string $url, string $emoji) : string
+    public static function GetImageTag(string $url, string $emoji, string $alt) : string
     {
         if (isset($url))
         {
-            return '<img src="' . $url . '" />';
+            return '<img src="' . $url . '" alt="' . $alt . '">';
         }
         return $emoji;
     }
@@ -37,7 +37,7 @@ class Utils
     {
         if (!isset($str) || !is_numeric($str)) return $default;
         $wind_kph = (float)$str;
-        return bcround($wind_kph*1000/60/60, 1);
+        return round($wind_kph*1000/60/60, 1);
     }
 
     public static function GetValueFromEnv(string $key) : string|bool
@@ -60,7 +60,7 @@ class Utils
     {
         $timestamp = strtotime($str);
         if ($timestamp === false) {
-            throw new InvalidArgumentException('Неверный формат даты');
+            die('Неверный формат даты');
         }
 
         $daysRu = [
