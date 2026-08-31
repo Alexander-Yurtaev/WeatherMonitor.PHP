@@ -1,6 +1,8 @@
 <?php
 
-namespace WeatherMonitor\exceptions;
+declare(strict_types=1);
+
+namespace WeatherMonitor\src\exceptions;
 
 class InvalidArgumentException extends \Exception
 {

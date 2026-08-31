@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use WeatherMonitor\src\helpers\Downloader;
@@ -156,8 +158,8 @@ include_once __DIR__ . '/incs/header.tpl.php';
                                     <span class="desc-text"><?= $day['day']['condition']['text'] ?></span>
                                 </div>
                                 <div class="day-temps">
-                                    <span class="max-temp"><?= Utils::GetNumber($day['day']['maxtemp_c'], 0) ?>°</span>
-                                    <span class="min-temp"><?= Utils::GetNumber($day['day']['mintemp_c'], 0) ?>°</span>
+                                    <span class="max-temp"><?= Utils::GetNumber($day['day']['maxtemp_c'], "0") ?>°</span>
+                                    <span class="min-temp"><?= Utils::GetNumber($day['day']['mintemp_c'], "0") ?>°</span>
                                 </div>
                             </div>
                         <?php endforeach; ?>

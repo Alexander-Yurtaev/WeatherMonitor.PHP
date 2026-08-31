@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WeatherMonitor\src\helpers;
 
 use DateTime;
 use Dotenv\Dotenv;
-use WeatherMonitor\exceptions\InvalidArgumentException;
+use WeatherMonitor\src\exceptions\InvalidArgumentException;
 
 class Utils
 {
@@ -17,11 +19,11 @@ class Utils
         return $default;
     }
 
-    public static function GetNumber(string $str, string $default) : string
+    public static function GetNumber(string|float $str, string $default) : string
     {
         if (!isset($str) || !is_numeric($str)) return $default;
         $value = (float)$str;
-        return round($value, 0);
+        return strval(round($value, 0));
     }
 
     public static function GetImageTag(string $url, string $emoji, string $alt) : string
@@ -37,7 +39,7 @@ class Utils
     {
         if (!isset($str) || !is_numeric($str)) return $default;
         $wind_kph = (float)$str;
-        return round($wind_kph*1000/60/60, 1);
+        return strval(round($wind_kph*1000/60/60, 1));
     }
 
     public static function GetValueFromEnv(string $key) : string|bool
@@ -50,7 +52,7 @@ class Utils
         return false;
     }
 
-    public static function GetHour(string $date) : int
+    public static function GetHour(string $date) : string
     {
         $now = new DateTime($date);
         return $now->format('H');
