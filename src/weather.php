@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use WeatherMonitor\src\helpers\Downloader;
-use WeatherMonitor\src\helpers\Utils;
+use AlexanderYurtaev\WeatherMonitor\helpers\Downloader;
+use AlexanderYurtaev\WeatherMonitor\helpers\Utils;
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $lat = isset($_GET["lat"]) && is_numeric($_GET["lat"]) ? +$_GET["lat"] : 0;

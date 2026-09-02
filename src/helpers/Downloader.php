@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WeatherMonitor\src\helpers;
+namespace AlexanderYurtaev\WeatherMonitor\helpers;
 
 class Downloader
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WeatherMonitor\src\exceptions;
+namespace AlexanderYurtaev\WeatherMonitor\exceptions;
 
 class InvalidArgumentException extends \Exception
 {

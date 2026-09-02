@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace WeatherMonitor\src\helpers;
+namespace AlexanderYurtaev\WeatherMonitor\helpers;
 
 use DateTime;
 use Dotenv\Dotenv;
-use WeatherMonitor\src\exceptions\InvalidArgumentException;
 
 class Utils
 {
