@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace AlexanderYurtaev\WeatherMonitor\helpers;
 
+use Exception;
+
 class Downloader
 {
+    /**
+     * @throws Exception
+     */
     function load(string $url)
     {
         // 1. Инициализируем сеанс cURL
@@ -34,14 +39,13 @@ class Downloader
         if (file_exists($certPath)) {
             curl_setopt($ch, CURLOPT_CAINFO, $certPath);
         }
-        $response = curl_exec($ch);
 
         // 3. Выполняем запрос
         $response = curl_exec($ch);
 
         // Проверяем наличие ошибок сети или протокола
         if ($response === false) {
-            throw new \Exception('Ошибка cURL: ' . curl_error($ch));
+            throw new Exception('Ошибка cURL: ' . curl_error($ch));
         } else {
             // Получаем код ответа сервера (например, 200, 404, 500)
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -50,7 +54,7 @@ class Downloader
                 // Декодируем JSON-ответ в ассоциативный массив
                 return json_decode($response, true);
             } else {
-                throw new \Exception("Сервер вернул ошибку: " . $httpCode);
+                throw new Exception("Сервер вернул ошибку: " . $httpCode);
             }
         }
     }

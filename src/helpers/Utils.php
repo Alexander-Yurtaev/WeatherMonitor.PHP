@@ -5,17 +5,22 @@ declare(strict_types=1);
 namespace AlexanderYurtaev\WeatherMonitor\helpers;
 
 use AlexanderYurtaev\WeatherMonitor\exceptions\InvalidArgumentException;
+use DateMalformedStringException;
 use DateTime;
 use Dotenv\Dotenv;
 use Throwable;
 
 class Utils
 {
+    /**
+     * @throws InvalidArgumentException
+     * @throws DateMalformedStringException
+     */
     public static function GetTimeFromDate(string $str) : string
     {
         if (date_parse($str))
         {
-            return new \DateTime($str)->format('H:i');
+            return new DateTime($str)->format('H:i');
         }
         throw new InvalidArgumentException($str);
     }
@@ -30,10 +35,10 @@ class Utils
         }
 
         $value = (float)$str;
-        return strval(round($value, 0));
+        return strval(round($value));
     }
 
-    public static function GetImageTag(string $url, string $emoji, string $alt) : string
+    public static function GetImageTag(?string $url, string $emoji, string $alt) : string
     {
         if (isset($url))
         {
@@ -66,7 +71,7 @@ class Utils
     }
 
     /**
-     * @throws \DateMalformedStringException
+     * @throws DateMalformedStringException
      */
     public static function GetHour(string $date) : string
     {
@@ -102,7 +107,7 @@ class Utils
         try {
             return $func();
         }
-        catch (Throwable $e) {
+        catch (Throwable) {
             return $default;
         }
     }
