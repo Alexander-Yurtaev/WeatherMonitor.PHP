@@ -42,3 +42,4 @@ containers/memcached/data
 containers/nginx/data
 containers/postgres/data
 containers/redis/data
+containers/minio/data
