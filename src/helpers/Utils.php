@@ -4,23 +4,31 @@ declare(strict_types=1);
 
 namespace AlexanderYurtaev\WeatherMonitor\helpers;
 
+use AlexanderYurtaev\WeatherMonitor\exceptions\InvalidArgumentException;
 use DateTime;
 use Dotenv\Dotenv;
+use Throwable;
 
 class Utils
 {
-    public static function GetTimeFromDate(string $str, string $default) : string
+    public static function GetTimeFromDate(string $str) : string
     {
         if (date_parse($str))
         {
             return new \DateTime($str)->format('H:i');
         }
-        return $default;
+        throw new InvalidArgumentException($str);
     }
 
-    public static function GetNumber(string|float $str, string $default) : string
+    /**
+     * @throws InvalidArgumentException
+     */
+    public static function GetNumber(string|float $str) : string
     {
-        if (!isset($str) || !is_numeric($str)) return $default;
+        if (!isset($str) || !is_numeric($str)){
+            throw new InvalidArgumentException($str);
+        }
+
         $value = (float)$str;
         return strval(round($value, 0));
     }
@@ -34,9 +42,15 @@ class Utils
         return $emoji;
     }
 
-    public static function ConvertKmH2Ms(mixed $str, string $default) : string
+    /**
+     * @throws InvalidArgumentException
+     */
+    public static function ConvertKmH2Ms(mixed $str) : string
     {
-        if (!isset($str) || !is_numeric($str)) return $default;
+        if (!isset($str) || !is_numeric($str)){
+            throw new InvalidArgumentException($str);
+        }
+
         $wind_kph = (float)$str;
         return strval(round($wind_kph*1000/60/60, 1));
     }
@@ -51,17 +65,23 @@ class Utils
         return false;
     }
 
+    /**
+     * @throws \DateMalformedStringException
+     */
     public static function GetHour(string $date) : string
     {
         $now = new DateTime($date);
         return $now->format('H');
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public static function GetWeekdayName(string $str) : string
     {
         $timestamp = strtotime($str);
         if ($timestamp === false) {
-            die('Неверный формат даты');
+            throw new InvalidArgumentException('Неверный формат даты');
         }
 
         $daysRu = [
@@ -75,5 +95,15 @@ class Utils
         ];
 
         return $daysRu[(int)date('w', $timestamp)] ?? '?';
+    }
+
+    public static function CallFunctionSafe(callable $func, string $default = ''): string
+    {
+        try {
+            return $func();
+        }
+        catch (Throwable $e) {
+            return $default;
+        }
     }
 }

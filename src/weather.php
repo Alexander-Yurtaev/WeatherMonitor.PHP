@@ -7,18 +7,21 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use AlexanderYurtaev\WeatherMonitor\helpers\Downloader;
 use AlexanderYurtaev\WeatherMonitor\helpers\Utils;
 
+$hasError = false;
+$cityName = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $lat = isset($_GET["lat"]) && is_numeric($_GET["lat"]) ? +$_GET["lat"] : 0;
     $lon = isset($_GET["lon"]) && is_numeric($_GET["lon"]) ? +$_GET["lon"] : 0;
     $api_key = Utils::GetValueFromEnv('WEATHER_API_KEY');
     if ($api_key === false) {
-        echo 'Не задан api-ключ.';
-        die();
+        throw new InvalidArgumentException('Не задан api-ключ.');
     }
 
     $url = 'https://api.weatherapi.com/v1/forecast.json?key=' . $api_key . '&q=' . $lat . ',' . $lon . '&days=3&lang=ru';
     $downloader = new Downloader();
-    $hasError = false;
+
+    $data = [];
     try {
         $data = $downloader->load($url);
     } catch (\Exception $e) {
@@ -27,16 +30,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     if (!$hasError) {
         $cityName = $data['location']['name'];
-        $updateTime = Utils::GetTimeFromDate($data['current']['last_updated'], 'сейчас');
-        $currentTemperature = Utils::GetNumber($data['current']['temp_c'], '--');
+        $updateTime = Utils::CallFunctionSafe(fn() => Utils::GetTimeFromDate($data['current']['last_updated']), 'сейчас');
+        $currentTemperature = Utils::CallFunctionSafe(fn() => Utils::GetNumber($data['current']['temp_c']), '--');
         $conditionText = $data['current']['condition']['text'] ?? '--';
-        $feelsLike = Utils::GetNumber($data['current']['feelslike_c'], '--');
+        $feelsLike = Utils::CallFunctionSafe(fn() => Utils::GetNumber($data['current']['feelslike_c']), '--');
         $currentIcon = Utils::GetImageTag($data['current']['condition']['icon'], '☀️', $data['current']['condition']['text']);
-        $humidity = Utils::GetNumber($data['current']['humidity'], '--');
-        $humidity = Utils::GetNumber($data['current']['humidity'], '--');
+        $humidity = Utils::CallFunctionSafe(fn() => Utils::GetNumber($data['current']['humidity']), '--');
+        $humidity = Utils::CallFunctionSafe(fn() => Utils::GetNumber($data['current']['humidity']), '--');
 
-        $windSpeed = Utils::ConvertKmH2Ms($data['current']['wind_kph'], '--');
-        $visiblity = Utils::GetNumber($data['current']['vis_km'], '--');
+        $windSpeed = Utils::CallFunctionSafe(fn() => Utils::ConvertKmH2Ms($data['current']['wind_kph']), '--');
+        $visiblity = Utils::CallFunctionSafe(fn() => Utils::GetNumber($data['current']['vis_km']), '--');
 
         $forecastDay = [];
         if (isset($data['forecast']) && is_array($data['forecast']['forecastday'])) {
@@ -122,18 +125,18 @@ include_once __DIR__ . '/incs/header.tpl.php';
                         <?php foreach ($forecastDay[0]['hour'] as $hour): ?>
                             <?php if (Utils::GetHour($data['current']['last_updated']) <= Utils::GetHour($hour['time'])): ?>
                                 <div class="hour-item">
-                                    <div class="hour-label"><?= Utils::GetTimeFromDate($hour['time'], '--') ?></div>
+                                    <div class="hour-label"><?= Utils::CallFunctionSafe(fn() => Utils::GetTimeFromDate($hour['time']), '--') ?></div>
                                     <div class="hour-icon"><?= Utils::GetImageTag($hour['condition']['icon'], '', $hour['condition']['text']) ?></div>
-                                    <div class="hour-temp"><?= Utils::GetNumber($hour['temp_c'], '--') ?>°</div>
+                                    <div class="hour-temp"><?= Utils::CallFunctionSafe(fn() => Utils::GetNumber($hour['temp_c'], '--')) ?>°</div>
                                     <div class="hour-day-label">Сегодня</div>
                                 </div>
                             <?php endif; ?>
                         <?php endforeach; ?>
                         <?php foreach ($forecastDay[1]['hour'] as $hour): ?>
                             <div class="hour-item">
-                                <div class="hour-label"><?= Utils::GetTimeFromDate($hour['time'], '--') ?></div>
+                                <div class="hour-label"><?= Utils::CallFunctionSafe(fn() => Utils::GetTimeFromDate($hour['time']), '--') ?></div>
                                 <div class="hour-icon"><?= Utils::GetImageTag($hour['condition']['icon'], '', $hour['condition']['text']) ?></div>
-                                <div class="hour-temp"><?= Utils::GetNumber($hour['temp_c'], '--') ?>°</div>
+                                <div class="hour-temp"><?= Utils::CallFunctionSafe(fn() => Utils::GetNumber($hour['temp_c'], '--')) ?>°</div>
                                 <div class="hour-day-label">Завтра</div>
                             </div>
                         <?php endforeach; ?>
@@ -152,14 +155,14 @@ include_once __DIR__ . '/incs/header.tpl.php';
                     <?php else: ?>
                         <?php foreach ($forecastDay as $day): ?>
                             <div class="day-card">
-                                <div class="day-name"><?= Utils::GetWeekdayName($day['date']) ?></div>
+                                <div class="day-name"><?= Utils::CallFunctionSafe(fn() => Utils::GetWeekdayName($day['date'])) ?></div>
                                 <div class="day-icon">
                                     <span><span class="desc-text"><?= Utils::GetImageTag($day['day']['condition']['icon'], '', $day['day']['condition']['text']) ?></span></span>
                                     <span class="desc-text"><?= $day['day']['condition']['text'] ?></span>
                                 </div>
                                 <div class="day-temps">
-                                    <span class="max-temp"><?= Utils::GetNumber($day['day']['maxtemp_c'], "0") ?>°</span>
-                                    <span class="min-temp"><?= Utils::GetNumber($day['day']['mintemp_c'], "0") ?>°</span>
+                                    <span class="max-temp"><?= Utils::CallFunctionSafe(fn() => Utils::GetNumber($day['day']['maxtemp_c'], "0")) ?>°</span>
+                                    <span class="min-temp"><?= Utils::CallFunctionSafe(fn() => Utils::GetNumber($day['day']['mintemp_c'], "0")) ?>°</span>
                                 </div>
                             </div>
                         <?php endforeach; ?>
