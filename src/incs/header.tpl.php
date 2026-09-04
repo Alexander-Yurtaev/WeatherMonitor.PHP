@@ -470,6 +470,22 @@
             color: #f0f7ff;
         }
 
+        /* === COPYRIGHT FOOTER === */
+        .app-footer {
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 0.3px;
+            flex-shrink: 0;
+        }
+        .app-footer i {
+            margin: 0 4px;
+            font-size: 12px;
+        }
+
         @media (max-width: 440px) {
             .app-card { padding: 16px; }
             .temp-big { font-size: 48px; }

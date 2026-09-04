@@ -52,7 +52,6 @@ include_once __DIR__ . '/incs/header.tpl.php';
                 </button>
             </div>
         </form>
-    </div>
 
 <?php
 include_once __DIR__ . '/incs/footer.tpl.php';

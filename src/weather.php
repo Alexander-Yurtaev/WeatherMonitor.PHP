@@ -175,7 +175,6 @@ include_once __DIR__ . '/incs/header.tpl.php';
                 </a>
             </div>
         </div>
-    </div>
 
 <?php
 include_once __DIR__ . '/incs/footer.tpl.php';
