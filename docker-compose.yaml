@@ -1,9 +1,9 @@
 services:
-  fpm:
+  php_fpm_1:
     build:
       context: ./containers/fpm
       dockerfile: Dockerfile
-    container_name: php-fpm
+    container_name: php_fpm_1
     volumes:
       - .:/var/www:cached
     environment:
@@ -17,8 +17,25 @@ services:
         condition: service_started
     networks:
       - app-net
-    #command: >
-    #  sh -c "if [ ! -d vendor ]; then composer install --no-dev; fi && php-fpm"
+
+  php_fpm_2:
+    build:
+      context: ./containers/fpm
+      dockerfile: Dockerfile
+    container_name: php_fpm_2
+    volumes:
+      - .:/var/www:cached
+    environment:
+      - PHP_INI_SCAN_DIR=/usr/local/etc/php/conf.d
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      memcached:
+        condition: service_started
+    networks:
+      - app-net
 
   nginx:
     build: ./containers/nginx
@@ -31,7 +48,9 @@ services:
       # Конфиг nginx тоже должен лежать здесь и быть read-only
       # - ./containers/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
-      fpm:
+      php_fpm_1:
+        condition: service_started
+      php_fpm_2:
         condition: service_started
     networks:
       - app-net
